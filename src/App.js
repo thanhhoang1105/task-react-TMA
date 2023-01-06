@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 
 function App() {
@@ -12,38 +12,55 @@ function App() {
     const [changeInputTwo, setChangeInputTwo] = useState('')
 
     const exportInputTaskTwo = (valueInputTwo, valueKInputTwo) => {
-        return setChangeInputTwo(
-            valueInputTwo && valueInputTwo.length > valueKInputTwo
-                ? valueInputTwo
-                      .slice(0, valueKInputTwo - 3)
-                      .split(' ')
-                      .slice(0, -1)
-                      .join(' ') +
-                      ' ' +
-                      '...'
-                : valueInputTwo
-        )
+        if (valueKInputTwo >= 3 && valueKInputTwo <= 500) {
+            setChangeInputTwo(
+                valueInputTwo && valueInputTwo.length > valueKInputTwo
+                    ? valueInputTwo
+                          .slice(0, valueKInputTwo - 3)
+                          .split(' ')
+                          .slice(0, -1)
+                          .join(' ') +
+                          ' ' +
+                          '...'
+                    : valueInputTwo
+            )
+        } else {
+            alert('Please enter a value K >= 3 and K <= 500')
+        }
     }
 
-    useEffect(() => {
-        if (valueKInputTwo <= 3) {
-            setValueKInputTwo(3)
-        }
-        if (valueKInputTwo >= 500) {
-            setValueKInputTwo(500)
-        }
-    }, [valueKInputTwo])
+    const exportInputTaskOne = valueInputOne => {
+        const re = /[\W_]/g
+        const lowRegStr = valueInputOne.toLowerCase().replace(re, '')
+        var fre = new Array(26)
+        fre.fill(0)
 
-    const exportInputTaskOne = str => {
-        return setChangeInputOne(
-            str.replace(/[\W_]/g, '').toLowerCase() ===
-                str
-                    .replace(/[\W_]/g, '')
-                    .toLowerCase()
-                    .split('')
-                    .reverse()
-                    .join('')
-        )
+        console.log('fre', fre)
+
+        var n = lowRegStr.length
+
+        for (var i = 0; i < n; i++) {
+            fre[lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)] += 1
+            console.log(
+                'fre[lowRegStr[i]',
+                fre[lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)]
+            )
+        }
+        var count = 0
+
+        for (let i = 0; i < 26; i++) {
+            if (fre[i] % 2) {
+                count += 1
+                console.log('fre[i] ', fre[i])
+                console.log('1')
+            }
+        }
+
+        if (count === 0 || count === 1) {
+            return 0
+        } else {
+            return count - 1
+        }
     }
 
     return (
@@ -55,10 +72,14 @@ function App() {
                     className=""
                     onChange={e => setValueInputOne(e.target.value)}
                 />
-                <button onClick={() => exportInputTaskTwo(valueInputOne)}>
+                <button
+                    onClick={() =>
+                        setChangeInputOne(exportInputTaskOne(valueInputOne))
+                    }
+                >
                     click
                 </button>
-                <div className="Task_result-1">{valueInputOne}</div>
+                <div className="Task_result-1">{changeInputOne}</div>
             </div>
             <div className="Task_2">
                 <div>Task 2</div>
