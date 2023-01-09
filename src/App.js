@@ -55,7 +55,6 @@ function App() {
         }
 
         var count = 0
-        var test = 100
 
         for (let i = 0; i < 26; i++) {
             if (fre[i] % 2) {
