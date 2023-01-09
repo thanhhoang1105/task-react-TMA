@@ -33,26 +33,39 @@ function App() {
         const re = /[\W_]/g
         const lowRegStr = valueInputOne.toLowerCase().replace(re, '')
         var fre = new Array(26)
-        fre.fill(0)
-
-        console.log('fre', fre)
-
+        var result = new Array(26)
+        var arr = []
         var n = lowRegStr.length
+        fre.fill(0)
+        console.log('fre', fre)
+        console.log('result', result)
 
         for (var i = 0; i < n; i++) {
             fre[lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)] += 1
             console.log(
-                'fre[lowRegStr[i]',
+                `remove [${i} + ${lowRegStr[i]}]`,
                 fre[lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)]
             )
+            console.log(
+                'lowRegStr[i].charCodeAt(0)',
+                lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)
+            )
+            // arr.push(lowRegStr[i])
+            // console.log('arr', arr.sort())
         }
+
         var count = 0
+        var test = 100
 
         for (let i = 0; i < 26; i++) {
             if (fre[i] % 2) {
                 count += 1
-                console.log('fre[i] ', fre[i])
-                console.log('1')
+
+                console.log(
+                    `fre [${i}]`,
+                    i + 'a'.charCodeAt(0),
+                    String.fromCharCode(i + 'a'.charCodeAt(0))
+                )
             }
         }
 
