@@ -29,27 +29,17 @@ function App() {
         }
     }
 
+    const re = /[\W_]/g
+    const lowRegStr = valueInputOne.toLowerCase().replace(re, '')
+
     const exportInputTaskOne = valueInputOne => {
-        const re = /[\W_]/g
-        const lowRegStr = valueInputOne.toLowerCase().replace(re, '')
         var fre = new Array(26)
 
         var n = lowRegStr.length
         fre.fill(0)
-        console.log('fre', fre)
 
         for (var i = 0; i < n; i++) {
             fre[lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)] += 1
-            // console.log(
-            //     `remove [${i} + ${lowRegStr[i]}]`,
-            //     fre[lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)]
-            // )
-            // console.log(
-            //     'lowRegStr[i].charCodeAt(0)',
-            //     lowRegStr[i].charCodeAt(0) - 'a'.charCodeAt(0)
-            // )
-            // arr.push(lowRegStr[i])
-            // console.log('arr', arr.sort())
         }
 
         var count = 0
@@ -57,54 +47,14 @@ function App() {
         for (let i = 0; i < 26; i++) {
             if (fre[i] % 2) {
                 count += 1
-
-                console.log(
-                    `fre [${i}]`,
-                    i + 'a'.charCodeAt(0),
-                    String.fromCharCode(i + 'a'.charCodeAt(0))
-                )
-                // console.log('count in', count)
             }
         }
 
         if (count === 0 || count === 1) {
-            return {
-                count: 0,
-                fre: fre
-            }
+            return 0
         } else {
-            return {
-                count: count - 1,
-                fre: fre
-            }
+            return count - 1
         }
-    }
-
-    const remove = valueInputOne => {
-        var arr = []
-        var arrCopy = []
-        var result = exportInputTaskOne(valueInputOne).fre
-        var count = exportInputTaskOne(valueInputOne).count
-
-        if (exportInputTaskOne(valueInputOne).count > 0) {
-            for (let i = 0; i < 26; i++) {
-                if (result[i] > 0) {
-                    arr.push(String.fromCharCode(i + 'a'.charCodeAt(0)))
-                    arrCopy.push(String.fromCharCode(i + 'a'.charCodeAt(0)))
-                }
-            }
-
-            for (let i = 0; i < count; i++) {
-                result[
-                    arr[arr.length - 1].charCodeAt(0) - 'a'.charCodeAt(0)
-                ] -= 1
-                arr.pop()
-            }
-        }
-        console.log('arr', arr)
-        console.log('arrCopy', arrCopy)
-        console.log('result', result)
-        return count
     }
 
     return (
@@ -117,7 +67,9 @@ function App() {
                     onChange={e => setValueInputOne(e.target.value)}
                 />
                 <button
-                    onClick={() => setChangeInputOne(remove(valueInputOne))}
+                    onClick={() =>
+                        setChangeInputOne(exportInputTaskOne(valueInputOne))
+                    }
                 >
                     click
                 </button>
