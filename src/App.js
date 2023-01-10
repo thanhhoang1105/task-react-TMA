@@ -29,10 +29,9 @@ function App() {
         }
     }
 
-    const re = /[\W_]/g
-    const lowRegStr = valueInputOne.toLowerCase().replace(re, '')
-
     const exportInputTaskOne = valueInputOne => {
+        const re = /[\W_]/g
+        const lowRegStr = valueInputOne.toLowerCase().replace(re, '')
         var fre = new Array(26)
 
         var n = lowRegStr.length
